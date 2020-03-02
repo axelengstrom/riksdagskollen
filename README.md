@@ -2,14 +2,14 @@
 
 ## Tillgängliga script
 
-### ``` npm start
+### `npm start`
 
 Kör appen i utvecklingsläge
 
-### ``` npm run test
+### `npm run test`
 
 Testa
 
-### ``` npm run build
+### `npm run build`
 
 Bygg
