@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="clip-iPhone_X_XS_11_Pro_1">
+      <rect width="512" height="512"/>
+    </clipPath>
+  </defs>
+  <g id="iPhone_X_XS_11_Pro_1" data-name="iPhone X/XS/11 Pro – 1" clip-path="url(#clip-iPhone_X_XS_11_Pro_1)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="512" height="512" rx="20" fill="#fff"/>
+    <path id="Rectangle_2" data-name="Rectangle 2" d="M20,0H75A20,20,0,0,1,95,20V220a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V20A20,20,0,0,1,20,0Z" transform="translate(64 292)" fill="#413677"/>
+    <path id="Rectangle_3" data-name="Rectangle 3" d="M20,0H75A20,20,0,0,1,95,20V126a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V20A20,20,0,0,1,20,0Z" transform="translate(209 386)" fill="#413677"/>
+    <path id="Rectangle_4" data-name="Rectangle 4" d="M20,0H75A20,20,0,0,1,95,20V372a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V20A20,20,0,0,1,20,0Z" transform="translate(353 140)" fill="#413677"/>
+  </g>
+</svg>
