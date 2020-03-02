@@ -10,7 +10,9 @@ const initialState = {
     C: true,
     V: true,
     MP: true,
-    ageRange: [24, 87]
+    ageRange: [24, 87],
+    man: true,
+    kvinna: true
   },
   sort: "parti",
   ascOrder: false,

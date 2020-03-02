@@ -50,7 +50,8 @@ const App = () => {
         person =>
           filter[person.parti] &&
           filter.ageRange[0] <= getAge(person.fodd_ar) &&
-          filter.ageRange[1] >= getAge(person.fodd_ar)
+          filter.ageRange[1] >= getAge(person.fodd_ar) &&
+          filter[person.kon]
       )
     );
   }, [data, filter]);
@@ -74,10 +75,10 @@ const App = () => {
       <TopBar handleDrawerToggle={handleDrawerToggle} />
       <FilterDrawer
         data={data}
-        handleInputChange={handleInputChange}
-        handleAgeChange={handleAgeChange}
         filter={filter}
+        handleAgeChange={handleAgeChange}
         handleDrawerToggle={handleDrawerToggle}
+        handleInputChange={handleInputChange}
         mobileOpen={mobileOpen}
       />
       <Container>
@@ -95,10 +96,10 @@ const App = () => {
                 <Hidden smDown implementation="css">
                   {data && data.length > 0 ? (
                     <Filter
-                      handleInputChange={handleInputChange}
-                      handleAgeChange={handleAgeChange}
-                      filter={filter}
                       data={data}
+                      filter={filter}
+                      handleAgeChange={handleAgeChange}
+                      handleInputChange={handleInputChange}
                     />
                   ) : null}
                 </Hidden>
