@@ -82,27 +82,11 @@ const Table = ({ data, filteredData }) => {
             }
           },
           {
-            title: "Förnamn",
-            field: "tilltalsnamn",
+            title: "Namn",
+            field: "sorteringsnamn",
             render: rowData => {
-              const { tilltalsnamn: name } = rowData;
-              return `${name}`;
-            }
-          },
-          {
-            title: "Efternamn",
-            field: "efternamn",
-            render: rowData => {
-              const { efternamn: lastname } = rowData;
-              return `${lastname}`;
-            }
-          },
-          {
-            title: "Kön",
-            field: "kon",
-            render: rowData => {
-              const { kon: gender } = rowData;
-              return getGender(gender);
+              const { tilltalsnamn: name, efternamn: lastname } = rowData;
+              return `${name} ${lastname}`;
             }
           },
           {
@@ -111,6 +95,14 @@ const Table = ({ data, filteredData }) => {
             render: rowData => {
               const { fodd_ar: age } = rowData;
               return getAge(age);
+            }
+          },
+          {
+            title: "Kön",
+            field: "kon",
+            render: rowData => {
+              const { kon: gender } = rowData;
+              return getGender(gender);
             }
           },
           {
