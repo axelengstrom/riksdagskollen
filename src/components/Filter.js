@@ -51,31 +51,33 @@ const Filter = ({ handleAgeChange, handleInputChange, filter, data }) => {
       <form>
         <Typography variant="subtitle2">Åldersintervall</Typography>
         <div className={classes.container}>
-          <Slider
-            value={ageRange}
-            onChangeCommitted={handleAgeChange}
-            onChange={(event, value) => setAgeRange(value)}
-            valueLabelDisplay="auto"
-            aria-labelledby="range-slider"
-            getAriaLabel={i => (i === 0 ? "Age low" : "Age high")}
-            getAriaValueText={i => ageRange[i]}
-            min={overallAge.min}
-            max={overallAge.max}
-          />
-          <span
-            aria-hidden="true"
-            className="MuiSlider-markLabel MuiSlider-markLabelActive"
-            style={{ left: 0 }}
-          >
-            {overallAge.min} år
-          </span>
-          <span
-            aria-hidden="true"
-            className="MuiSlider-markLabel MuiSlider-markLabelActive"
-            style={{ left: 100 + "%" }}
-          >
-            {overallAge.max} år
-          </span>
+          <label>
+            <Slider
+              value={ageRange}
+              onChangeCommitted={handleAgeChange}
+              onChange={(event, value) => setAgeRange(value)}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              getAriaLabel={i => (i === 0 ? "Age low" : "Age high")}
+              getAriaValueText={i => ageRange[i]}
+              min={overallAge.min}
+              max={overallAge.max}
+            />
+            <span
+              aria-hidden="true"
+              className="MuiSlider-markLabel MuiSlider-markLabelActive"
+              style={{ left: 0 }}
+            >
+              {overallAge.min} år
+            </span>
+            <span
+              aria-hidden="true"
+              className="MuiSlider-markLabel MuiSlider-markLabelActive"
+              style={{ left: 100 + "%" }}
+            >
+              {overallAge.max} år
+            </span>
+          </label>
         </div>
         <Divider />
         <Typography variant="subtitle2" className={classes.agerange}>
@@ -85,12 +87,14 @@ const Filter = ({ handleAgeChange, handleInputChange, filter, data }) => {
           const { title, name } = party;
           return (
             <div key={title}>
-              <Switch
-                name={name}
-                onChange={handleInputChange}
-                checked={filter[name]}
-              />
-              {title}
+              <label>
+                <Switch
+                  name={name}
+                  onChange={handleInputChange}
+                  checked={filter[name]}
+                />
+                {title}
+              </label>
             </div>
           );
         })}
@@ -99,20 +103,24 @@ const Filter = ({ handleAgeChange, handleInputChange, filter, data }) => {
           Kön
         </Typography>
         <div>
-          <PurpleSwitch
-            name="man"
-            onChange={handleInputChange}
-            checked={filter["man"]}
-          />
-          Män
+          <label>
+            <PurpleSwitch
+              name="man"
+              onChange={handleInputChange}
+              checked={filter["man"]}
+            />
+            Män
+          </label>
         </div>
         <div>
-          <PurpleSwitch
-            name="kvinna"
-            onChange={handleInputChange}
-            checked={filter["kvinna"]}
-          />
-          Kvinnor
+          <label>
+            <PurpleSwitch
+              name="kvinna"
+              onChange={handleInputChange}
+              checked={filter["kvinna"]}
+            />
+            Kvinnor
+          </label>
         </div>
       </form>
     </aside>
