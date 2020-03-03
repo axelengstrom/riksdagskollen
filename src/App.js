@@ -14,7 +14,7 @@ import Summary from "./components/Summary";
 import Table from "./components/Table";
 import TopBar from "./components/TopBar";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexGrow: 1
