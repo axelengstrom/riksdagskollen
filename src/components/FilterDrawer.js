@@ -7,10 +7,9 @@ import Filter from "./Filter";
 const useStyles = makeStyles(theme => ({
   drawer: {
     [theme.breakpoints.up("md")]: {
-      flexShrink: 0,
-      padding: theme.spacing(5)
+      flexShrink: 0
     },
-    padding: theme.spacing(5)
+    padding: theme.spacing(2)
   },
   drawerPaper: {
     padding: theme.spacing(5)

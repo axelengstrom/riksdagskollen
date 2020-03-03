@@ -16,7 +16,6 @@ import TopBar from "./components/TopBar";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: 50,
     display: "flex",
     flexGrow: 1
   },
