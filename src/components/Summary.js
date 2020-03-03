@@ -43,8 +43,6 @@ const Summary = ({ data, loading }) => {
   if (!loading) {
     return (
       <>
-        <Typography variant="h5">Nuvarande urval</Typography>
-        <Divider />
         <div className={classes.root}>
           <Grid container spacing={5}>
             <Grid item xs={12} md={3}>

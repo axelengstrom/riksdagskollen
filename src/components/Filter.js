@@ -7,7 +7,6 @@ import { getOverallAge } from "../utils/functions";
 import initialState from "../utils/initialState";
 
 const useStyles = makeStyles(() => ({
-  filter: { position: "sticky", top: 0 },
   agerange: {
     marginTop: 20
   },
@@ -50,9 +49,7 @@ const Filter = ({ handleAgeChange, handleInputChange, filter, data }) => {
   return (
     <aside className={classes.filter}>
       <form>
-        <Typography variant="subtitle2" className={classes.agerange}>
-          Åldersintervall
-        </Typography>
+        <Typography variant="subtitle2">Åldersintervall</Typography>
         <div className={classes.container}>
           <Slider
             value={ageRange}

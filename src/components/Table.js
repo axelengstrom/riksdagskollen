@@ -57,7 +57,7 @@ const Table = ({ data, filteredData }) => {
     <main className="persons">
       <MaterialTable
         options={{
-          pageSize: 10
+          pageSize: 20
         }}
         title="Ledamöter i riksdagen"
         icons={tableIcons}

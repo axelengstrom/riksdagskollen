@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, CssBaseline, Grid, Hidden } from "@material-ui/core";
+import Sticky from "react-sticky-el";
 
 import { getAge } from "./utils/functions";
 import initialState from "./utils/initialState";
@@ -19,15 +20,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexGrow: 1
   },
-  title: {
-    flexGrow: 1,
-    paddingTop: 10,
-    paddingBottom: 10
-  },
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(5)
+  sticky: {
+    paddingTop: 40
   }
 }));
 
@@ -95,12 +89,14 @@ const App = () => {
               <Grid item xs={12} md={3}>
                 <Hidden smDown implementation="css">
                   {data && data.length > 0 ? (
-                    <Filter
-                      data={data}
-                      filter={filter}
-                      handleAgeChange={handleAgeChange}
-                      handleInputChange={handleInputChange}
-                    />
+                    <Sticky className={classes.sticky}>
+                      <Filter
+                        data={data}
+                        filter={filter}
+                        handleAgeChange={handleAgeChange}
+                        handleInputChange={handleInputChange}
+                      />
+                    </Sticky>
                   ) : null}
                 </Hidden>
               </Grid>
