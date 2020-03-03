@@ -1,8 +1,8 @@
 # Riksdagskollen
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/a7edde6b-fd90-498e-90f8-880fc680815b/deploy-status)](https://app.netlify.com/sites/naughty-volhard-f0d2e3/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a7edde6b-fd90-498e-90f8-880fc680815b/deploy-status)](https://app.netlify.com/sites/rikskoll/deploys)
 
-[live demo](http://naughty-volhard-f0d2e3.netlify.com)
+[live demo](http://rikskoll.netlify.com)
 
 ## Tillgängliga script
 
