@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Divider, Drawer, Hidden } from "@material-ui/core";
+import { Drawer, Hidden } from "@material-ui/core";
 
+import * as actionTypes from "../store/actions/actions";
 import Filter from "./Filter";
 
 const useStyles = makeStyles(theme => ({
@@ -16,31 +18,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FilterDrawer = ({
-  data,
-  filter,
-  handleDrawerToggle,
-  handleInputChange,
-  handleAgeChange,
-  mobileOpen
-}) => {
+const FilterDrawer = ({ handleDrawerToggle, ui }) => {
+  const { mobileOpen } = ui;
   const classes = useStyles();
   const theme = useTheme();
-
-  const drawer = (
-    <>
-      <div className={classes.toolbar} />
-      <Divider />
-      {data && data.length > 0 ? (
-        <Filter
-          handleInputChange={handleInputChange}
-          handleAgeChange={handleAgeChange}
-          filter={filter}
-          data={data}
-        />
-      ) : null}
-    </>
-  );
 
   return (
     <div className={classes.drawer} aria-label="filter">
@@ -57,11 +38,24 @@ const FilterDrawer = ({
             keepMounted: true
           }}
         >
-          {drawer}
+          <div className={classes.toolbar} />
+          <Filter />
         </Drawer>
       </Hidden>
     </div>
   );
 };
 
-export default FilterDrawer;
+const mapStateToProps = ({ ui }) => {
+  return {
+    ui
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleDrawerToggle: () => dispatch(actionTypes.handleDrawerToggle())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterDrawer);

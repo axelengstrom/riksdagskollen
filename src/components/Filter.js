@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Switch, Slider, Divider, Typography } from "@material-ui/core";
+import React from "react";
+import { connect } from "react-redux";
+import { Divider, Switch, Typography } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { purple } from "@material-ui/core/colors";
 
-import { getOverallAge } from "../utils/functions";
-import initialState from "../utils/initialState";
+import * as actionCreators from "../store/actions/actions";
+import AgeSlider from "./AgeSlider";
 
 const useStyles = makeStyles(() => ({
   agerange: {
@@ -32,58 +33,24 @@ const PurpleSwitch = withStyles({
   track: {}
 })(Switch);
 
-const Filter = ({ handleAgeChange, handleInputChange, filter, data }) => {
+const Filter = ({ handleInputChange, data }) => {
+  const { filter, parties } = data;
   const classes = useStyles();
-  const { ageRange: appliedAgeRange } = filter;
-  const [overallAge, setOverallAge] = useState({});
-  const [ageRange, setAgeRange] = useState([]);
-
-  useEffect(() => {
-    setOverallAge(getOverallAge(data));
-  }, [data]);
-
-  useEffect(() => {
-    setAgeRange(appliedAgeRange);
-  }, [appliedAgeRange]);
 
   return (
     <aside className={classes.filter}>
       <form>
-        <Typography variant="subtitle2">Åldersintervall</Typography>
+        <Typography variant="subtitle2" gutterBottom>
+          Åldersintervall
+        </Typography>
         <div className={classes.container}>
-          <label>
-            <Slider
-              value={ageRange}
-              onChangeCommitted={handleAgeChange}
-              onChange={(event, value) => setAgeRange(value)}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              getAriaLabel={i => (i === 0 ? "Age low" : "Age high")}
-              getAriaValueText={i => ageRange[i]}
-              min={overallAge.min}
-              max={overallAge.max}
-            />
-            <span
-              aria-hidden="true"
-              className="MuiSlider-markLabel MuiSlider-markLabelActive"
-              style={{ left: 0 }}
-            >
-              {overallAge.min} år
-            </span>
-            <span
-              aria-hidden="true"
-              className="MuiSlider-markLabel MuiSlider-markLabelActive"
-              style={{ left: 100 + "%" }}
-            >
-              {overallAge.max} år
-            </span>
-          </label>
+          <AgeSlider />
         </div>
         <Divider />
         <Typography variant="subtitle2" className={classes.agerange}>
           Partier
         </Typography>
-        {initialState.parties.map(party => {
+        {parties.map(party => {
           const { title, name } = party;
           return (
             <div key={title}>
@@ -127,4 +94,17 @@ const Filter = ({ handleAgeChange, handleInputChange, filter, data }) => {
   );
 };
 
-export default Filter;
+const mapStateToProps = ({ data }) => {
+  return {
+    data
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleInputChange: (event, value) =>
+      dispatch(actionCreators.handleInputChange(event, value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

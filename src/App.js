@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, CssBaseline, Grid, Hidden } from "@material-ui/core";
 import Sticky from "react-sticky-el";
-
-import { getAge } from "./utils/functions";
-import initialState from "./utils/initialState";
-import dataSource from "./utils/dataSource";
+import { connect } from "react-redux";
 
 import Filter from "./components/Filter";
 import FilterDrawer from "./components/FilterDrawer";
@@ -13,6 +10,7 @@ import Loading from "./components/Loading";
 import Summary from "./components/Summary";
 import Table from "./components/Table";
 import TopBar from "./components/TopBar";
+import * as actionCreators from "./store/actions/actions";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,83 +22,65 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const App = () => {
+const App = ({
+  data,
+  fetchData,
+  filterData,
+  setAverageAge,
+  setPartyDistribution,
+  setGenderDistribution
+}) => {
+  const { filter, filteredItems, items } = data;
   const classes = useStyles();
-  const [data, setData] = useState(initialState.data);
-  const [filter, setFilter] = useState(initialState.filter);
-  const [filteredData, setFilteredData] = useState(initialState.filteredData);
-  const [mobileOpen, setMobileOpen] = useState(initialState.mobileOpen);
 
   useEffect(() => {
-    fetch(dataSource)
-      .then(response => response.json())
-      .then(json => setData(json.personlista.person));
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    setFilteredData(
-      data.filter(
-        person =>
-          filter[person.parti] &&
-          filter.ageRange[0] <= getAge(person.fodd_ar) &&
-          filter.ageRange[1] >= getAge(person.fodd_ar) &&
-          filter[person.kon]
-      )
-    );
-  }, [data, filter]);
+    filterData(items);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, filter]);
 
-  const handleInputChange = (e, value) => {
-    const name = e.target.name;
-    setFilter({ ...filter, [name]: value });
-  };
-
-  const handleAgeChange = (e, value) => {
-    setFilter({ ...filter, ageRange: value });
-  };
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  useEffect(() => {
+    setAverageAge(filteredItems);
+    setPartyDistribution(filteredItems);
+    setGenderDistribution(filteredItems);
+  }, [
+    filteredItems,
+    setAverageAge,
+    setPartyDistribution,
+    setGenderDistribution
+  ]);
 
   return (
     <>
       <CssBaseline />
-      <TopBar handleDrawerToggle={handleDrawerToggle} />
-      <FilterDrawer
-        data={data}
-        filter={filter}
-        handleAgeChange={handleAgeChange}
-        handleDrawerToggle={handleDrawerToggle}
-        handleInputChange={handleInputChange}
-        mobileOpen={mobileOpen}
-      />
+      <TopBar />
+      <FilterDrawer />
       <Container>
-        {data && data.length > 0 ? (
+        {items && items.length > 0 ? (
           <div className={classes.root}>
             <Grid container spacing={5}>
               <Grid item xs={12}>
-                {filteredData && filteredData.length > 0 ? (
-                  <Summary data={filteredData} />
+                {filteredItems && filteredItems.length > 0 ? (
+                  <Summary />
                 ) : (
-                  <Summary data={[]} loading={true} />
+                  <Summary loading />
                 )}
               </Grid>
               <Grid item xs={12} md={3}>
                 <Hidden smDown implementation="css">
-                  {data && data.length > 0 ? (
+                  {items && items.length > 0 ? (
                     <Sticky className={classes.sticky}>
-                      <Filter
-                        data={data}
-                        filter={filter}
-                        handleAgeChange={handleAgeChange}
-                        handleInputChange={handleInputChange}
-                      />
+                      <Filter />
                     </Sticky>
                   ) : null}
                 </Hidden>
               </Grid>
               <Grid item xs={12} md={9}>
-                <Table data={data} filteredData={filteredData} />
+                <Table />
               </Grid>
             </Grid>
           </div>
@@ -112,4 +92,24 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = ({ data, filter }) => {
+  return {
+    data,
+    filter
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: () => dispatch(actionCreators.fetchData()),
+    filterData: items => dispatch(actionCreators.filterData(items)),
+    setAverageAge: filteredItems =>
+      dispatch(actionCreators.setAverageAge(filteredItems)),
+    setGenderDistribution: filteredItems =>
+      dispatch(actionCreators.setGenderDistribution(filteredItems)),
+    setPartyDistribution: filteredItems =>
+      dispatch(actionCreators.setPartyDistribution(filteredItems))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
