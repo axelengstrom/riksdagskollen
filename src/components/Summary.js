@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import { Pie, Doughnut } from "react-chartjs-2";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider, Grid, Paper, Typography } from "@material-ui/core";
 
-import {
-  getAverageAge,
-  getPartyDistribution,
-  getGender,
-  getGenderDistribution
-} from "../utils/functions";
+import { getGender } from "../utils/functions";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,16 +25,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Summary = ({ data, loading }) => {
-  const [averageAge, setAverageAge] = useState(0);
-  const [partyDistribution, setPartyDistribution] = useState({});
-  const [genderDistribution, setGenderDistribution] = useState({});
+  const { averageAge, genderDistribution, partyDistribution } = data;
   const classes = useStyles();
-
-  useEffect(() => {
-    setAverageAge(getAverageAge(data));
-    setPartyDistribution(getPartyDistribution(data));
-    setGenderDistribution(getGenderDistribution(data));
-  }, [data]);
 
   if (!loading) {
     return (
@@ -159,4 +147,10 @@ const Summary = ({ data, loading }) => {
   }
 };
 
-export default Summary;
+const mapStateToProps = ({ data }) => {
+  return {
+    data
+  };
+};
+
+export default connect(mapStateToProps)(Summary);

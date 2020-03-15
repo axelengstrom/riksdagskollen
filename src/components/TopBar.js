@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import FilterListOutlinedIcon from "@material-ui/icons/FilterListOutlined";
 import {
@@ -9,12 +10,13 @@ import {
   Typography
 } from "@material-ui/core";
 
+import * as actionTypes from "../store/actions/actions";
 import logoInv from "../icons/logo-inv.svg";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
     background: "#413677",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       position: "fixed"
     }
   },
@@ -57,4 +59,10 @@ const TopBar = ({ handleDrawerToggle }) => {
   );
 };
 
-export default TopBar;
+const mapDispatchToProps = dispatch => {
+  return {
+    handleDrawerToggle: () => dispatch(actionTypes.handleDrawerToggle())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TopBar);
