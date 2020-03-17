@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, CssBaseline, Grid, Hidden } from "@material-ui/core";
 import Sticky from "react-sticky-el";
-import { connect } from "react-redux";
+
+import * as actionCreators from "./store/actions/actions";
 
 import Filter from "./components/Filter";
 import FilterDrawer from "./components/FilterDrawer";
@@ -10,7 +12,6 @@ import Loading from "./components/Loading";
 import Summary from "./components/Summary";
 import Table from "./components/Table";
 import TopBar from "./components/TopBar";
-import * as actionCreators from "./store/actions/actions";
 
 const useStyles = makeStyles(() => ({
   root: {

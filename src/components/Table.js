@@ -69,45 +69,34 @@ const Table = ({ data }) => {
           {
             title: "Bild",
             sorting: false,
-            render: rowData => {
-              const {
-                bild_url_80: image,
-                tilltalsnamn: name,
-                efternamn: lastname,
-                parti: party
-              } = rowData;
-              return (
-                <Avatar
-                  className={classes.avatar}
-                  src={image}
-                  alt={`${name} ${lastname} (${party})`}
-                />
-              );
-            }
+            render: ({
+              bild_url_80: image,
+              tilltalsnamn: name,
+              efternamn: lastname,
+              parti: party
+            }) => (
+              <Avatar
+                className={classes.avatar}
+                src={image}
+                alt={`${name} ${lastname} (${party})`}
+              />
+            )
           },
           {
             title: "Namn",
             field: "sorteringsnamn",
-            render: rowData => {
-              const { tilltalsnamn: name, efternamn: lastname } = rowData;
-              return `${name} ${lastname}`;
-            }
+            render: ({ tilltalsnamn: name, efternamn: lastname }) =>
+              `${name} ${lastname}`
           },
           {
             title: "Ålder",
             field: "fodd_ar",
-            render: rowData => {
-              const { fodd_ar: age } = rowData;
-              return getAge(age);
-            }
+            render: ({ fodd_ar: age }) => getAge(age)
           },
           {
             title: "Kön",
             field: "kon",
-            render: rowData => {
-              const { kon: gender } = rowData;
-              return getGender(gender);
-            }
+            render: ({ kon: gender }) => getGender(gender)
           },
           {
             title: "Pondus",
@@ -133,10 +122,8 @@ const Table = ({ data }) => {
                     .filter(item => item.tom !== null)
                     .map(item => Date.parse(item.tom))
                 )),
-            render: rowData => {
-              const { personuppdrag: tasks } = rowData;
+            render: ({ personuppdrag: tasks }) => {
               const { uppdrag: taskList } = tasks;
-
               return (
                 <div className={classes.progressBackground}>
                   <div
@@ -156,10 +143,7 @@ const Table = ({ data }) => {
             title: "Parti",
             field: "parti",
             defaultSort: "asc",
-            render: rowData => {
-              const { parti: party } = rowData;
-              return <Badge party={party} />;
-            }
+            render: ({ parti: party }) => <Badge party={party} />
           }
         ]}
         data={filteredItems}
