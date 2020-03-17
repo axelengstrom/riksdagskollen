@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, CssBaseline, Grid, Hidden } from "@material-ui/core";
 import Sticky from "react-sticky-el";
@@ -23,37 +23,26 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const App = ({
-  data,
-  fetchData,
-  filterData,
-  setAverageAge,
-  setPartyDistribution,
-  setGenderDistribution
-}) => {
+const App = () => {
+  const data = useSelector(state => state.data);
+  const dispatch = useDispatch();
   const { filter, filteredItems, items } = data;
   const classes = useStyles();
 
   useEffect(() => {
-    fetchData();
+    dispatch(actionCreators.fetchData());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    filterData(items);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, filter]);
+    dispatch(actionCreators.filterData(items));
+  }, [items, filter, dispatch]);
 
   useEffect(() => {
-    setAverageAge(filteredItems);
-    setPartyDistribution(filteredItems);
-    setGenderDistribution(filteredItems);
-  }, [
-    filteredItems,
-    setAverageAge,
-    setPartyDistribution,
-    setGenderDistribution
-  ]);
+    dispatch(actionCreators.setAverageAge(filteredItems));
+    dispatch(actionCreators.setGenderDistribution(filteredItems));
+    dispatch(actionCreators.setPartyDistribution(filteredItems));
+  }, [filteredItems, dispatch]);
 
   return (
     <>
@@ -93,24 +82,4 @@ const App = ({
   );
 };
 
-const mapStateToProps = ({ data, filter }) => {
-  return {
-    data,
-    filter
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData: () => dispatch(actionCreators.fetchData()),
-    filterData: items => dispatch(actionCreators.filterData(items)),
-    setAverageAge: filteredItems =>
-      dispatch(actionCreators.setAverageAge(filteredItems)),
-    setGenderDistribution: filteredItems =>
-      dispatch(actionCreators.setGenderDistribution(filteredItems)),
-    setPartyDistribution: filteredItems =>
-      dispatch(actionCreators.setPartyDistribution(filteredItems))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
