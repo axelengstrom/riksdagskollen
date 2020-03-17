@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Pie, Doughnut } from "react-chartjs-2";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider, Grid, Paper, Typography } from "@material-ui/core";
@@ -24,7 +24,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Summary = ({ data, loading }) => {
+const Summary = ({ loading }) => {
+  const data = useSelector(state => state.data);
   const { averageAge, genderDistribution, partyDistribution } = data;
   const classes = useStyles();
 
@@ -147,10 +148,4 @@ const Summary = ({ data, loading }) => {
   }
 };
 
-const mapStateToProps = ({ data }) => {
-  return {
-    data
-  };
-};
-
-export default connect(mapStateToProps)(Summary);
+export default Summary;

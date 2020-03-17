@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Divider, Switch, Typography } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { purple } from "@material-ui/core/colors";
@@ -33,9 +33,14 @@ const PurpleSwitch = withStyles({
   track: {}
 })(Switch);
 
-const Filter = ({ handleInputChange, data }) => {
+const Filter = () => {
+  const data = useSelector(state => state.data);
+  const dispatch = useDispatch();
   const { filter, parties } = data;
   const classes = useStyles();
+
+  const handleInputChange = (event, value) =>
+    dispatch(actionCreators.handleInputChange(event, value));
 
   return (
     <aside className={classes.filter}>
@@ -94,17 +99,4 @@ const Filter = ({ handleInputChange, data }) => {
   );
 };
 
-const mapStateToProps = ({ data }) => {
-  return {
-    data
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    handleInputChange: (event, value) =>
-      dispatch(actionCreators.handleInputChange(event, value))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;

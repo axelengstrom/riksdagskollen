@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import FilterListOutlinedIcon from "@material-ui/icons/FilterListOutlined";
 import {
@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TopBar = ({ handleDrawerToggle }) => {
+const TopBar = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -40,7 +41,7 @@ const TopBar = ({ handleDrawerToggle }) => {
             color="inherit"
             aria-label="Öppna filter"
             edge="start"
-            onClick={handleDrawerToggle}
+            onClick={() => dispatch(actionTypes.handleDrawerToggle())}
             className={classes.filterButton}
           >
             <FilterListOutlinedIcon />
@@ -59,10 +60,4 @@ const TopBar = ({ handleDrawerToggle }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleDrawerToggle: () => dispatch(actionTypes.handleDrawerToggle())
-  };
-};
-
-export default connect(null, mapDispatchToProps)(TopBar);
+export default TopBar;

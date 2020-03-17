@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "@material-ui/core/Slider";
 
 import { getAge } from "../utils/functions";
@@ -7,8 +7,11 @@ import * as actionCreators from "../store/actions/actions";
 
 const valuetext = value => `${value} år`;
 
-const AgeSlider = ({ data, setAgeRange }) => {
+const AgeSlider = () => {
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.data);
   const [value, setValue] = useState([24, 87]);
+
   const { overallAge } = data;
   const ageMin = getAge(Math.max(...overallAge));
   const ageMax = getAge(Math.min(...overallAge));
@@ -22,7 +25,9 @@ const AgeSlider = ({ data, setAgeRange }) => {
       <Slider
         value={value}
         onChange={handleChange}
-        onChangeCommitted={(event, value) => setAgeRange(event, value)}
+        onChangeCommitted={(event, value) =>
+          dispatch(actionCreators.setAgeRange(event, value))
+        }
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
@@ -47,17 +52,4 @@ const AgeSlider = ({ data, setAgeRange }) => {
   );
 };
 
-const mapStateToProps = ({ data }) => {
-  return {
-    data
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setAgeRange: (event, value) =>
-      dispatch(actionCreators.setAgeRange(event, value))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AgeSlider);
+export default AgeSlider;

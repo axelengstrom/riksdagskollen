@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Avatar } from "@material-ui/core";
 import MaterialTable from "material-table";
 import {
@@ -19,8 +19,6 @@ import {
   getGender,
   getOverallActivity
 } from "../utils/functions";
-
-import * as actionCreators from "../store/actions/actions";
 
 import Badge from "./Badge";
 
@@ -53,7 +51,8 @@ const tableIcons = {
   ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />)
 };
 
-const Table = ({ data }) => {
+const Table = () => {
+  const data = useSelector(state => state.data);
   const { filteredItems, items } = data;
   const classes = useStyles();
 
@@ -181,16 +180,4 @@ const Table = ({ data }) => {
   );
 };
 
-const mapStateToProps = ({ data }) => {
-  return {
-    data
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData: () => dispatch(actionCreators.fetchData())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Table);
+export default Table;

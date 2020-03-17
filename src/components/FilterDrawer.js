@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Drawer, Hidden } from "@material-ui/core";
 
@@ -18,7 +18,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FilterDrawer = ({ handleDrawerToggle, ui }) => {
+const FilterDrawer = () => {
+  const dispatch = useDispatch();
+  const ui = useSelector(state => state.ui);
   const { mobileOpen } = ui;
   const classes = useStyles();
   const theme = useTheme();
@@ -30,7 +32,7 @@ const FilterDrawer = ({ handleDrawerToggle, ui }) => {
           variant="temporary"
           anchor={theme.direction === "rtl" ? "right" : "left"}
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={() => dispatch(actionTypes.handleDrawerToggle())}
           classes={{
             paper: classes.drawerPaper
           }}
@@ -46,16 +48,4 @@ const FilterDrawer = ({ handleDrawerToggle, ui }) => {
   );
 };
 
-const mapStateToProps = ({ ui }) => {
-  return {
-    ui
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    handleDrawerToggle: () => dispatch(actionTypes.handleDrawerToggle())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterDrawer);
+export default FilterDrawer;
