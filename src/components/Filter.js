@@ -40,7 +40,7 @@ const Filter = () => {
   const classes = useStyles();
 
   const handleInputChange = (event, value) =>
-    dispatch(actionCreators.handleInputChange(event, value));
+    dispatch(actionCreators.handleInputChange({ event, value }));
 
   return (
     <aside className={classes.filter}>

@@ -36,14 +36,12 @@ const initialState = {
   partyDistribution: { parties: [], values: [], colors: [] }
 };
 
-const reducer = (state = initialState, action) => {
-  const { event, value } = action;
-
-  switch (action.type) {
+const reducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case actionTypes.FILTER_DATA:
       return {
         ...state,
-        filteredItems: action.data.filter(
+        filteredItems: payload.filter(
           person =>
             state.filter[person.parti] &&
             state.filter.ageRange[0] <= getAge(person.fodd_ar) &&
@@ -53,12 +51,12 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.HANDLE_INPUT_CHANGE:
-      const name = event.target.name;
+      const name = payload.event.target.name;
       return {
         ...state,
         filter: {
           ...state.filter,
-          [name]: value
+          [name]: payload.value
         }
       };
 
@@ -67,7 +65,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         filter: {
           ...state.filter,
-          ageRange: action.value
+          ageRange: payload.value
         }
       };
 
@@ -75,10 +73,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         averageAge: Math.floor(
-          action.data
+          payload
             .map(person => getAge(person.fodd_ar))
-            .reduce((a, b) => a + b, 0) / action.data.length
+            .reduce((a, b) => a + b, 0) / payload.length
         )
+      };
+
+    case actionTypes.SET_DATA:
+      return {
+        ...state,
+        items: payload
       };
 
     case actionTypes.SET_GENDER_DISTRIBUTION:
@@ -91,7 +95,7 @@ const reducer = (state = initialState, action) => {
         man: "#5e5b6b"
       };
 
-      const map = action.data.reduce(
+      const map = payload.reduce(
         (acc, person) => acc.set(person.kon, (acc.get(person.kon) || 0) + 1),
         new Map()
       );
@@ -128,7 +132,7 @@ const reducer = (state = initialState, action) => {
         V: "#FF0000"
       };
 
-      const pMap = action.data
+      const pMap = payload
         .sort(sortBy("parti"))
         .reduce(
           (acc, person) =>
@@ -147,16 +151,10 @@ const reducer = (state = initialState, action) => {
         partyDistribution: { parties, values: pValues, colors: pColors }
       };
 
-    case actionTypes.SET_DATA:
-      return {
-        ...state,
-        items: action.data
-      };
-
     case actionTypes.SET_OVERALL_AGE:
       return {
         ...state,
-        overallAge: action.data.map(person => Number(person.fodd_ar))
+        overallAge: payload.map(person => Number(person.fodd_ar))
       };
 
     default:

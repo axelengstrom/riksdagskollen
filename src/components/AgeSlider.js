@@ -26,7 +26,7 @@ const AgeSlider = () => {
         value={value}
         onChange={handleChange}
         onChangeCommitted={(event, value) =>
-          dispatch(actionCreators.setAgeRange(event, value))
+          dispatch(actionCreators.setAgeRange({ event, value }))
         }
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"

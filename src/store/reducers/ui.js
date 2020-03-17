@@ -4,8 +4,8 @@ const initialState = {
   mobileOpen: false
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
+const reducer = (state = initialState, { type }) => {
+  switch (type) {
     case actionTypes.HANDLE_DRAWER_TOGGLE:
       return {
         ...state,
