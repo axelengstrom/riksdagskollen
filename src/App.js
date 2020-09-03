@@ -31,8 +31,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(actionCreators.fetchData());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(actionCreators.filterData(items));
