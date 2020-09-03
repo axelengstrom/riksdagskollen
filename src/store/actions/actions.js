@@ -1,4 +1,4 @@
-import {data} from "../../data/data.riksdagen.se.js";
+import data from "../../data/data.riksdagen.se";
 
 export const FETCH_DATA = "FETCH_DATA";
 export const FILTER_DATA = "FILTER_DATA";
