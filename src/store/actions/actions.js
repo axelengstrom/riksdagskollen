@@ -1,3 +1,5 @@
+import {data} from "../../data/data.riksdagen.se.js";
+
 export const FETCH_DATA = "FETCH_DATA";
 export const FILTER_DATA = "FILTER_DATA";
 export const HANDLE_DRAWER_TOGGLE = "HANDLE_DRAWER_TOGGLE";
@@ -9,13 +11,18 @@ export const SET_GENDER_DISTRIBUTION = "SET_GENDER_DISTRIBUTION";
 export const SET_PARTY_DISTRIBUTION = "SET_PARTY_DISTRIBUTION";
 export const SET_OVERALL_AGE = "SET_OVERALL_AGE";
 
-export const fetchData = () => dispatch =>
-  fetch("https://data.riksdagen.se/personlista/?utformat=json")
-    .then(response => response.json())
-    .then(json => {
-      dispatch(setData(json.personlista.person));
-      dispatch(setOverallAge(json.personlista.person));
-    });
+// export const fetchData = () => dispatch =>
+//   fetch("https://data.riksdagen.se/personlista/?utformat=json")
+//     .then(response => response.json())
+//     .then(json => {
+//       dispatch(setData(json.personlista.person));
+//       dispatch(setOverallAge(json.personlista.person));
+//     });
+
+export const fetchData = () => dispatch => {
+  dispatch(setData(data.personlista.person));
+  dispatch(setOverallAge(data.personlista.person));
+} 
 
 export const filterData = payload => ({
   type: FILTER_DATA,
